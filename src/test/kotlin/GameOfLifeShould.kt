@@ -1,4 +1,6 @@
 import org.example.Cell
+import org.example.CellStatus.ALIVE
+import org.example.CellStatus.DEAD
 import org.example.GameOfLife
 import org.junit.jupiter.api.Assertions.assertEquals
 import kotlin.test.Test
@@ -13,7 +15,7 @@ class GameOfLifeShould {
 
         val cells = gameOfLife.nextGeneration()
 
-        assertEquals(Cell.DEAD, cells[0][0])
+        assertEquals(Cell(DEAD), cells[0][0])
     }
 
     @Test
@@ -27,7 +29,7 @@ class GameOfLifeShould {
 
         val cells = gameOfLife.nextGeneration()
 
-        assertEquals(Cell.DEAD, cells[0][1])
+        assertEquals(Cell(DEAD), cells[0][1])
     }
 
     @Test
@@ -39,7 +41,7 @@ class GameOfLifeShould {
 
         val cells = gameOfLife.nextGeneration()
 
-        assertEquals(Cell.ALIVE, cells[0][0])
+        assertEquals(Cell(ALIVE), cells[0][0])
     }
 
     @Test
@@ -51,6 +53,6 @@ class GameOfLifeShould {
 
         val cells = gameOfLife.nextGeneration()
 
-        assertEquals(Cell.ALIVE, cells[0][0])
+        assertEquals(Cell(ALIVE), cells[0][0])
     }
 }

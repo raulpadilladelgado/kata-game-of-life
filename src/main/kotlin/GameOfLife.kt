@@ -1,27 +1,21 @@
 package org.example
 
 class GameOfLife {
-    private var cells: Array<Array<Cell>> = Array(10) { Array(10) { Cell.DEAD } }
+
+    private var cells: Array<Array<Cell>> = Array(10) { Array(10) { Cell() } }
 
     fun nextGeneration(): Array<Array<Cell>> {
         cells.indices.forEach { rowIndex ->
             cells[rowIndex].indices.forEach { columnIndex ->
-                if (liveNeighboursFrom(rowIndex, columnIndex) < 2) {
-                    cells[rowIndex][columnIndex] = Cell.DEAD
-                }
-                if (liveNeighboursFrom(rowIndex, columnIndex) > 3) {
-                    cells[rowIndex][columnIndex] = Cell.DEAD
-                }
-                if (liveNeighboursFrom(rowIndex, columnIndex) == 3) {
-                    cells[rowIndex][columnIndex] = Cell.ALIVE
-                }
+                cells[rowIndex][columnIndex].regenerate(liveNeighboursFrom(rowIndex, columnIndex))
             }
         }
         return cells
     }
 
+    //TODO modify implementation to make cell status private
     fun withLiveCellAt(row: Int, colum: Int): GameOfLife {
-        cells[row][colum] = Cell.ALIVE
+        cells[row][colum].status = CellStatus.ALIVE
         return this
     }
 
@@ -49,9 +43,5 @@ class GameOfLife {
         currentCellColumnIndex: Int
     ) = (rowIndex != currentCellRowIndex || columnIndex != currentCellColumnIndex)
 
-    private fun isCellAlive(rowIndex: Int, columnIndex: Int) = cells[rowIndex][columnIndex] == Cell.ALIVE
-}
-
-enum class Cell {
-    ALIVE, DEAD
+    private fun isCellAlive(rowIndex: Int, columnIndex: Int) = cells[rowIndex][columnIndex].isAlive()
 }

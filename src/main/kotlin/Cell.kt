@@ -3,7 +3,7 @@ package org.example
 import org.example.CellStatus.ALIVE
 import org.example.CellStatus.DEAD
 
-data class Cell(var status: CellStatus = DEAD) {
+data class Cell(private var status: CellStatus = DEAD) {
     fun regenerate(liveNeighbours: Int) {
         if (liveNeighbours < 2) {
             status = DEAD

@@ -1,5 +1,7 @@
 package org.example
 
+import org.example.CellStatus.ALIVE
+
 class GameOfLife {
 
     private var cells: Array<Array<Cell>> = Array(10) { Array(10) { Cell() } }
@@ -13,9 +15,8 @@ class GameOfLife {
         return cells
     }
 
-    //TODO modify implementation to make cell status private
     fun withLiveCellAt(row: Int, colum: Int): GameOfLife {
-        cells[row][colum].status = CellStatus.ALIVE
+        cells[row][colum] = Cell(ALIVE)
         return this
     }
 

@@ -1,10 +1,16 @@
 package org.example
 
 import org.example.CellStatus.ALIVE
+import java.lang.Math.random
 
 class GameOfLife {
 
     private var cells: Array<Array<Cell>> = Array(10) { Array(10) { Cell() } }
+
+    fun from(cells: Array<Array<Cell>>): GameOfLife {
+        this.cells = cells
+        return this
+    }
 
     fun nextGeneration(): Array<Array<Cell>> {
         cells.indices.forEach { rowIndex ->
@@ -18,6 +24,18 @@ class GameOfLife {
     fun withLiveCellAt(row: Int, colum: Int): GameOfLife {
         cells[row][colum] = Cell(ALIVE)
         return this
+    }
+
+    fun withRandomLiveCells(): GameOfLife {
+        cells.indices.forEach { rowIndex ->
+            cells[rowIndex].indices.forEach { columnIndex ->
+                if (random() < 0.5) {
+                    cells[rowIndex][columnIndex] = Cell(ALIVE)
+                }
+            }
+        }
+        return this
+
     }
 
     private fun liveNeighboursFrom(currentCellRowIndex: Int, currentCellColumnIndex: Int): Int {
@@ -45,4 +63,15 @@ class GameOfLife {
     ) = (rowIndex != currentCellRowIndex || columnIndex != currentCellColumnIndex)
 
     private fun isCellAlive(rowIndex: Int, columnIndex: Int) = cells[rowIndex][columnIndex].isAlive()
+
+    override fun toString(): String {
+        var result = ""
+        cells.indices.forEach { rowIndex ->
+            cells[rowIndex].indices.forEach { columnIndex ->
+                result += if (cells[rowIndex][columnIndex].isAlive()) "🦠" else " "
+            }
+            result += "\n"
+        }
+        return result
+    }
 }
